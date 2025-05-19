@@ -80,8 +80,7 @@ const submitGuess = () => {
   }
 
   if (guess === correct) {
-    showMessage("🎉 You got it! Check the console 😉");
-    console.log("💌 Will you be my girlfriend?");
+    showMessage("So is that a yes?");
     disableKeyboard();
     return;
   }
