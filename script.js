@@ -80,7 +80,8 @@ const submitGuess = () => {
   }
 
   if (guess === correct) {
-    showMessage("?");
+    showMessage("🎉 You got it! Check the console 😉");
+    console.log("💌 Will you be my girlfriend?");
     disableKeyboard();
     return;
   }
@@ -112,7 +113,7 @@ for (let i = 0; i < MAX_ATTEMPTS; i++) {
   board.appendChild(row);
 }
 
-// Render on-screen keyboard
+// Render on-screen keyboard with touch and click support
 const renderKeyboard = () => {
   const rows = [
     "qwertyuiop",
@@ -127,7 +128,9 @@ const renderKeyboard = () => {
       const button = document.createElement("button");
       button.className = "key";
       button.textContent = letter;
-      button.addEventListener("click", () => handleLetter(letter));
+      const handler = () => handleLetter(letter);
+      button.addEventListener("click", handler);
+      button.addEventListener("touchstart", handler);
       rowDiv.appendChild(button);
     });
 
@@ -138,15 +141,18 @@ const renderKeyboard = () => {
   enter.textContent = "Enter";
   enter.className = "key large";
   enter.addEventListener("click", submitGuess);
+  enter.addEventListener("touchstart", submitGuess);
   keyboard.appendChild(enter);
 
   const back = document.createElement("button");
   back.textContent = "Del";
   back.className = "key large";
-  back.addEventListener("click", () => {
+  const backspace = () => {
     currentGuess = currentGuess.slice(0, -1);
     updateBoard();
-  });
+  };
+  back.addEventListener("click", backspace);
+  back.addEventListener("touchstart", backspace);
   keyboard.appendChild(back);
 };
 
