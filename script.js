@@ -129,8 +129,13 @@ const renderKeyboard = () => {
       button.className = "key";
       button.textContent = letter;
       const handler = () => handleLetter(letter);
+
+      button.addEventListener("touchstart", (e) => {
+        e.preventDefault(); // Prevent simulated click
+        handler();
+      }, { passive: false });
+
       button.addEventListener("click", handler);
-      button.addEventListener("touchstart", handler);
       rowDiv.appendChild(button);
     });
 
@@ -140,8 +145,11 @@ const renderKeyboard = () => {
   const enter = document.createElement("button");
   enter.textContent = "Enter";
   enter.className = "key large";
+  enter.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    submitGuess();
+  }, { passive: false });
   enter.addEventListener("click", submitGuess);
-  enter.addEventListener("touchstart", submitGuess);
   keyboard.appendChild(enter);
 
   const back = document.createElement("button");
@@ -151,10 +159,14 @@ const renderKeyboard = () => {
     currentGuess = currentGuess.slice(0, -1);
     updateBoard();
   };
+  back.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    backspace();
+  }, { passive: false });
   back.addEventListener("click", backspace);
-  back.addEventListener("touchstart", backspace);
   keyboard.appendChild(back);
 };
+
 
 renderKeyboard();
 
